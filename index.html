@@ -4,356 +4,582 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO: Title & Description -->
     <title>R&amp;B Engineering Platform - Login</title>
     <meta
       name="description"
       content="Full lifecycle engineering management solution, empowering cross-sea bridge construction, improving engineering quality and safety management efficiency."
     />
     <link rel="canonical" href="https://example.com/login" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
 
-    <!-- Performance: Preload LCP Image (fetchpriority only on img tag, not here) -->
+    <!-- No-404 favicon (replace with your real favicon if you have one) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Cpath d='M18 44V20h14q6 0 9 3t3 8q0 5-3 9t-9 4H18zm8-7h5q3 0 4.5-1.6T37 31q0-2.6-1.2-4t-4.3-1.4h-5v11z' fill='white'/%3E%3C/svg%3E"
+    />
+
+    <!-- Preload desktop image (not LCP on mobile because left panel is hidden) -->
     <link
       rel="preload"
       as="image"
-      href="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
+      href="https://i.postimg.cc/yN2bZ20z/photo-1545558014-8692077e9b5c-(1).avif"
     />
-
-    <!-- Design: Google Fonts (Async load to prevent render blocking) -->
-    <!-- For deterministic 100/100: prefer system fonts or self-host WOFF2 with font-display: swap -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Async font loading trick: load CSS as print media, then switch to all -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript
-      ><link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
-        rel="stylesheet"
-    /></noscript>
-
-    <!-- Design: Tailwind CSS (MUST REPLACE with built, purged, minified CSS for 100/100) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Performance: Defer Icon Script -->
-    <script
-      defer
-      src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"
-    ></script>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
     <style>
+      :root {
+        --bg: #ffffff;
+        --text: #0f172a; /* slate-900 */
+        --muted: #334155; /* slate-700 */
+        --muted-2: #475569; /* slate-600 */
+        --border: #e2e8f0; /* slate-200 */
+        --surface: #f8fafc; /* slate-50 */
+        --primary: #0f172a; /* slate-900 */
+        --primary-hover: #1e293b; /* slate-800 */
+        --link: #2563eb; /* blue-600 */
+        --focus: #2563eb;
+        --shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+        --shadow-hover: 0 6px 20px rgba(15, 23, 42, 0.12);
+        --radius: 12px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { height: 100%; }
+
       body {
-        font-family: "Inter", "Noto Sans SC", system-ui, -apple-system,
-          sans-serif;
+        margin: 0;
+        background: var(--bg);
+        color: var(--muted-2);
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          "Apple Color Emoji", "Segoe UI Emoji";
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      /* Hide scrollbar utilities */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
+
+      /* Skip link (a11y) */
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 12px;
+        padding: 10px 12px;
+        background: #fff;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        z-index: 1000;
       }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .skip-link:focus {
+        left: 12px;
       }
 
-      /* Prevent CLS on icons */
-      iconify-icon {
-        display: inline-block;
-        min-width: 1em;
-        min-height: 1em;
-      }
-
-      /* Visible focus for a11y (Lighthouse 100) */
+      /* Focus-visible for a11y */
       a:focus-visible,
       button:focus-visible,
       input:focus-visible {
         outline: none;
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563eb;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--focus);
       }
-      /* Ensure checkbox focus is visible */
-      input[type="checkbox"]:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563eb;
+
+      .page {
+        height: 100%;
+        display: flex;
+        overflow: hidden;
+      }
+
+      /* Left panel (desktop only) */
+      .brand {
+        position: relative;
+        display: none;
+        width: 58.3333%;
+        min-width: 520px;
+        background: #0f172a;
+        overflow: hidden;
+      }
+      @media (min-width: 1024px) {
+        .brand { display: flex; }
+      }
+
+      .brand__img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1);
+        transition: transform 18s ease-in-out;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .brand:hover .brand__img { transform: scale(1.05); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .brand__img { transition: none; }
+      }
+
+      .brand__overlay1 {
+        position: absolute;
+        inset: 0;
+        background: rgba(30, 58, 138, 0.30);
+        mix-blend-mode: multiply;
+      }
+      .brand__overlay2 {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(15, 23, 42, 0.92),
+          rgba(15, 23, 42, 0.45),
+          rgba(15, 23, 42, 0.0)
+        );
+      }
+
+      .brand__content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 48px;
+        width: 100%;
+      }
+
+      .brand__headline {
+        margin: 0;
+        color: #fff;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+        font-size: 52px;
+        line-height: 1.05;
+        text-shadow: 0 12px 40px rgba(0,0,0,0.35);
+        max-width: 560px;
+      }
+      .brand__headline span { color: #bfdbfe; } /* blue-200 */
+
+      .brand__desc {
+        margin: 18px 0 0;
+        color: rgba(226, 232, 240, 0.95); /* slate-200 */
+        font-size: 16px;
+        line-height: 1.6;
+        font-weight: 560;
+        text-shadow: 0 10px 30px rgba(0,0,0,0.30);
+        max-width: 520px;
+      }
+
+      .brand__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(255,255,255,0.10);
+      }
+      .brand__copyright {
+        color: rgba(226, 232, 240, 0.90);
+        font-size: 13px;
+        font-weight: 560;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.10);
+        background: rgba(0,0,0,0.28);
+        backdrop-filter: blur(10px);
+        color: rgba(226, 232, 240, 0.95);
+        font-size: 12px;
+        font-weight: 560;
+        white-space: nowrap;
+      }
+
+      /* Right panel */
+      .auth {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+      }
+      @media (min-width: 1024px) {
+        .auth { width: 41.6667%; }
+      }
+
+      .card {
+        width: 100%;
+        max-width: 420px;
+        padding: 0 32px;
+      }
+
+      .title {
+        margin: 0 0 10px;
+        color: var(--text);
+        font-size: 32px;
+        font-weight: 650;
+        letter-spacing: -0.02em;
+      }
+
+      .form {
+        margin-top: 28px;
+        display: grid;
+        gap: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+
+      .field { display: grid; gap: 8px; }
+
+      .input-wrap { position: relative; }
+
+      .input {
+        width: 100%;
+        appearance: none;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 12px 14px 12px 44px;
+        font-size: 16px;
+        color: var(--text);
+        transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      }
+
+      .input::placeholder { color: #64748b; } /* slate-500 */
+
+      .input:focus {
+        background: #fff;
+        border-color: var(--link);
+        box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.10);
+      }
+
+      .icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        color: #94a3b8; /* slate-400 */
+        pointer-events: none;
+      }
+      .input:focus + .icon,
+      .input:focus-visible + .icon {
+        color: var(--link);
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .check {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .check input {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--primary);
+      }
+
+      .check span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--muted-2);
+      }
+
+      .link {
+        font-size: 14px;
+        font-weight: 650;
+        color: var(--link);
+        text-decoration: none;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .link:hover { text-decoration: underline; }
+
+      .btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 0;
+        border-radius: var(--radius);
+        background: var(--primary);
+        color: #fff;
+        padding: 12px 14px;
+        font-size: 16px;
+        font-weight: 650;
+        cursor: pointer;
+        min-height: 48px;
+        box-shadow: var(--shadow);
+        transition: transform 120ms ease, background 160ms ease, box-shadow 160ms ease;
+      }
+      .btn:hover {
+        background: var(--primary-hover);
+        box-shadow: var(--shadow-hover);
+      }
+      .btn:active { transform: scale(0.99); }
+
+      .divider {
+        position: relative;
+        padding: 10px 0;
+        margin: 4px 0;
+      }
+      .divider::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: #f1f5f9; /* slate-100 */
+      }
+      .divider span {
+        position: relative;
+        display: inline-block;
+        padding: 0 10px;
+        background: #fff;
+        color: #64748b; /* slate-500 */
+        font-size: 13px;
+        font-weight: 600;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .social {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .btn-outline {
+        width: 100%;
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--muted-2);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        font-size: 14px;
+        font-weight: 650;
+        cursor: pointer;
+        transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      }
+      .btn-outline:hover {
+        background: var(--surface);
+        border-color: #cbd5e1; /* slate-300 */
+      }
+
+      .muted-center {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 14px;
+        color: #64748b; /* slate-500 (passes contrast) */
+      }
+      .muted-center a {
+        color: var(--muted);
+        font-weight: 650;
+        text-decoration: none;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .muted-center a:hover { text-decoration: underline; }
+
+      .footer {
+        position: absolute;
+        bottom: 22px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 0 32px;
+        color: #64748b; /* slate-500 (passes contrast; fixes your audit fail) */
+        font-size: 12px;
+        font-weight: 650;
+        letter-spacing: 0.02em;
+      }
+
+      /* Small screens */
+      @media (max-width: 480px) {
+        .card { padding: 0 18px; }
+        .title { font-size: 28px; }
       }
     </style>
   </head>
-  <body class="h-screen w-full flex overflow-hidden bg-white text-slate-600">
-    <!-- Left Section: Realistic Suspension Bridge Background -->
-    <main class="w-full flex h-full">
-      <section
-        class="relative hidden lg:flex lg:w-7/12 bg-slate-800 flex-col justify-between overflow-hidden group"
-        aria-label="Brand Showcase"
-      >
-        <!-- Optimized Background Image (LCP element) -->
-        <div class="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
-            alt="Suspension bridge construction site"
-            width="1200"
-            height="800"
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-            class="w-full h-full object-cover object-center transition-transform duration-[20s] ease-in-out group-hover:scale-105"
-          />
-        </div>
 
-        <!-- Gradient Overlays -->
-        <div
-          class="absolute inset-0 z-10 bg-blue-900/30 mix-blend-multiply"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="absolute inset-0 z-10 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"
-          aria-hidden="true"
-        ></div>
+  <body>
+    <a class="skip-link" href="#login-title">Skip to login</a>
 
-        <!-- Content Overlay -->
-        <div class="relative z-20 p-12 flex flex-col h-full justify-between">
-          <div class="flex items-center gap-2"></div>
+    <main class="page">
+      <!-- Left: Brand showcase -->
+      <section class="brand" aria-label="Brand Showcase">
+        <img
+          class="brand__img"
+          src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
+          alt="Suspension bridge construction site"
+          width="1200"
+          height="800"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="brand__overlay1" aria-hidden="true"></div>
+        <div class="brand__overlay2" aria-hidden="true"></div>
 
-          <div class="max-w-md">
-            <h1
-              class="text-5xl font-semibold text-white tracking-tight mb-6 drop-shadow-lg"
-            >
+        <div class="brand__content">
+          <div></div>
+
+          <div>
+            <h1 class="brand__headline">
               Smart Management <br />
-              <span class="text-blue-200">Connecting Future</span>
+              <span>Connecting Future</span>
             </h1>
-            <p
-              class="text-slate-200 text-base leading-relaxed font-medium drop-shadow-md"
-            >
-              Full lifecycle engineering management solution, empowering
-              cross-sea bridge construction, improving engineering quality and
-              safety management efficiency.
+            <p class="brand__desc">
+              Full lifecycle engineering management solution, empowering cross-sea bridge construction,
+              improving engineering quality and safety management efficiency.
             </p>
           </div>
 
-          <div
-            class="flex items-center justify-between border-t border-white/10 pt-6"
-          >
-            <div class="text-sm text-slate-300 font-medium">
-              © 2026 R&amp;B Design Group. All Rights Reserved.
-            </div>
-            <!-- Location Label -->
-            <div
-              class="flex items-center gap-1.5 px-3 py-1.5 bg-black/30 backdrop-blur-md rounded-full border border-white/10 text-xs text-slate-200"
-            >
-              <iconify-icon
-                icon="lucide:map-pin"
-                width="12"
-                height="12"
-                aria-hidden="true"
-              ></iconify-icon>
+          <div class="brand__footer">
+            <div class="brand__copyright">© 2026 R&amp;B Design Group. All Rights Reserved.</div>
+
+            <div class="pill" aria-label="Location">
+              <!-- map-pin -->
+              <svg class="pill__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 22s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
               <span>Cross-sea Bridge Site - Section A2</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Right Section: Login Form -->
-      <section
-        class="w-full lg:w-5/12 flex items-center justify-center bg-white relative"
-        aria-labelledby="login-title"
-      >
-        <div class="w-full max-w-sm px-8">
-          <!-- Mobile Logo -->
-          <div class="lg:hidden flex items-center gap-2 mb-8"></div>
+      <!-- Right: Login -->
+      <section class="auth" aria-labelledby="login-title">
+        <div class="card">
+          <h2 id="login-title" class="title">Welcome Back</h2>
 
-          <div class="mb-10">
-            <h2
-              id="login-title"
-              class="text-3xl font-semibold text-slate-900 tracking-tight mb-4"
-            >
-              Welcome Back
-            </h2>
-          </div>
-
-          <!-- Form action: Replace # with actual HTTPS endpoint -->
-          <form action="#" method="POST" class="space-y-5" novalidate>
-            <!-- Username Input -->
-            <div class="group">
-              <label
-                for="username"
-                class="block text-sm font-medium text-slate-700 mb-2"
-                >Account / Employee ID</label
-              >
-              <div class="relative">
+          <form class="form" action="/login" method="POST">
+            <div class="field">
+              <label for="username">Account / Employee ID</label>
+              <div class="input-wrap">
                 <input
+                  class="input"
                   type="text"
                   id="username"
                   name="username"
                   autocomplete="username"
-                  class="peer w-full bg-slate-50 text-base text-slate-900 border border-slate-200 rounded-lg px-4 py-3 pl-12 placeholder-slate-500 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  inputmode="email"
                   placeholder="user@example.com"
                   required
-                  aria-required="true"
                 />
-                <div
-                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 peer-focus:text-blue-500 transition-colors"
-                  aria-hidden="true"
-                >
-                  <iconify-icon
-                    icon="lucide:user"
-                    width="20"
-                    height="20"
-                    stroke-width="1.5"
-                  ></iconify-icon>
-                </div>
+                <!-- user -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 21a8 8 0 1 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M12 13a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 13Z" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
               </div>
             </div>
 
-            <!-- Password Input -->
-            <div class="group">
-              <div class="flex items-center justify-between mb-2">
-                <label
-                  for="password"
-                  class="block text-sm font-medium text-slate-700"
-                  >Password</label
-                >
+            <div class="field">
+              <div class="row" style="margin-bottom: 0;">
+                <label for="password" style="margin: 0;">Password</label>
               </div>
-              <div class="relative">
+              <div class="input-wrap">
                 <input
+                  class="input"
                   type="password"
                   id="password"
                   name="password"
                   autocomplete="current-password"
-                  class="peer w-full bg-slate-50 text-base text-slate-900 border border-slate-200 rounded-lg px-4 py-3 pl-12 placeholder-slate-500 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200"
                   placeholder="••••••••"
                   required
-                  aria-required="true"
                 />
-                <div
-                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 peer-focus:text-blue-500 transition-colors"
-                  aria-hidden="true"
-                >
-                  <iconify-icon
-                    icon="lucide:lock"
-                    width="20"
-                    height="20"
-                    stroke-width="1.5"
-                  ></iconify-icon>
-                </div>
+                <!-- lock -->
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M6.5 11h11A2.5 2.5 0 0 1 20 13.5v6A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5v-6A2.5 2.5 0 0 1 6.5 11Z" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
               </div>
             </div>
 
-            <!-- Remember Me & Forgot Password -->
-            <div class="flex items-center justify-between">
-              <label class="flex items-center space-x-2 cursor-pointer group">
-                <div class="relative flex items-center">
-                  <input
-                    type="checkbox"
-                    name="remember"
-                    id="remember"
-                    class="peer appearance-none h-4 w-4 border border-slate-300 rounded bg-white checked:bg-slate-900 checked:border-slate-900 transition-colors focus:ring-2 focus:ring-offset-1 focus:ring-slate-500/20"
-                  />
-                  <iconify-icon
-                    icon="lucide:check"
-                    class="absolute left-0.5 top-0.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"
-                    width="12"
-                    height="12"
-                    stroke-width="3"
-                    aria-hidden="true"
-                  ></iconify-icon>
-                </div>
-                <span
-                  class="text-sm text-slate-600 font-medium group-hover:text-slate-800 transition-colors"
-                  >Remember me</span
-                >
+            <div class="row">
+              <label class="check" for="remember">
+                <input type="checkbox" name="remember" id="remember" />
+                <span>Remember me</span>
               </label>
 
-              <a
-                href="#"
-                class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline transition-all min-h-[44px] inline-flex items-center"
-                >Forgot password?</a
-              >
+              <a class="link" href="/forgot-password">Forgot password?</a>
             </div>
 
-            <!-- Submit Button -->
-            <button
-              type="submit"
-              class="w-full bg-slate-900 hover:bg-slate-800 text-white text-base font-medium py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px]"
-            >
+            <button class="btn" type="submit">
               <span>Login Now</span>
-              <iconify-icon
-                icon="lucide:arrow-right"
-                width="20"
-                height="20"
-                stroke-width="1.5"
-                aria-hidden="true"
-              ></iconify-icon>
+              <!-- arrow-right -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
 
-            <!-- Divider -->
-            <div class="relative py-2">
-              <div
-                class="absolute inset-0 flex items-center"
-                aria-hidden="true"
-              >
-                <div class="w-full border-t border-slate-100"></div>
-              </div>
-              <div class="relative flex justify-center text-sm">
-                <span class="px-2 bg-white text-slate-500"
-                  >Or sign in with</span
-                >
-              </div>
-            </div>
+            <div class="divider" aria-hidden="true"><span>Or sign in with</span></div>
 
-            <!-- Social Login -->
-            <div class="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                class="flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium group min-h-[48px]"
-              >
-                <iconify-icon
-                  icon="mdi:google"
-                  class="text-slate-400 group-hover:text-[#4285F4] transition-colors"
-                  width="20"
-                  height="20"
-                  aria-hidden="true"
-                ></iconify-icon>
+            <div class="social">
+              <button class="btn-outline" type="button" aria-label="Sign in with Google">
+                <!-- Google "G" (simple) -->
+                <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.1 1.54 7.5 2.82l5.14-4.98C33.55 4.54 29.26 2.5 24 2.5 14.73 2.5 6.84 7.86 3.1 15.68l6.27 4.87C11.1 14.7 16.95 9.5 24 9.5z"/>
+                  <path fill="#4285F4" d="M46.5 24.5c0-1.6-.14-2.73-.44-3.91H24v7.41h12.79c-.26 2-1.66 5.01-4.78 7.02l6.17 4.78c3.69-3.42 8.32-8.45 8.32-15.3z"/>
+                  <path fill="#FBBC05" d="M9.37 28.05A14.7 14.7 0 0 1 8.6 24.5c0-1.23.21-2.42.56-3.55L2.9 16.08A24.1 24.1 0 0 0 1.5 24.5c0 3.87.94 7.52 2.6 10.72l5.27-7.17z"/>
+                  <path fill="#34A853" d="M24 46.5c6.3 0 11.6-2.08 15.47-5.7l-6.17-4.78c-1.65 1.15-3.86 1.95-9.3 1.95-7.05 0-13.02-4.65-15.14-11.1l-6.27 4.86C6.34 40.15 14.34 46.5 24 46.5z"/>
+                </svg>
                 <span>Google</span>
               </button>
-              <button
-                type="button"
-                class="flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium group min-h-[48px]"
-              >
-                <iconify-icon
-                  icon="mdi:github"
-                  class="text-slate-400 group-hover:text-[#181717] transition-colors"
-                  width="20"
-                  height="20"
-                  aria-hidden="true"
-                ></iconify-icon>
-                <span>Github</span>
+
+              <button class="btn-outline" type="button" aria-label="Sign in with GitHub">
+                <!-- GitHub mark (simple) -->
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 .7A11.3 11.3 0 0 0 8.4 22c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.6 4 18.6 4.3 18.6 4.3c.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.6-2.7 5.6-5.3 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.3 11.3 0 0 0 12 .7z"/>
+                </svg>
+                <span>GitHub</span>
               </button>
             </div>
           </form>
 
-          <div class="mt-8 text-center">
-            <p class="text-sm text-slate-400">
-              Not registered yet?
-              <a
-                href="#"
-                class="text-slate-700 font-medium hover:underline min-h-[44px] inline-flex items-center"
-                >Contact Admin</a
-              >
-            </p>
-          </div>
-        </div>
-
-        <!-- Footer for form side -->
-        <div class="absolute bottom-6 w-full text-center px-8">
-          <p class="text-xs text-slate-300 font-medium tracking-tight">
-            SECURE PLATFORM V2.4.0
+          <p class="muted-center">
+            Not registered yet?
+            <a href="/contact-admin">Contact Admin</a>
           </p>
         </div>
+
+        <div class="footer">SECURE PLATFORM V2.4.0</div>
       </section>
     </main>
   </body>
