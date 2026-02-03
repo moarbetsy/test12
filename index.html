@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO: Title & Description -->
+    <title>R&amp;B Engineering Platform - Login</title>
+    <meta
+      name="description"
+      content="Full lifecycle engineering management solution, empowering cross-sea bridge construction, improving engineering quality and safety management efficiency."
+    />
+    <link rel="canonical" href="https://example.com/login" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Performance: Preload LCP Image (fetchpriority only on img tag, not here) -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
+    />
+
+    <!-- Design: Google Fonts (Async load to prevent render blocking) -->
+    <!-- For deterministic 100/100: prefer system fonts or self-host WOFF2 with font-display: swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Async font loading trick: load CSS as print media, then switch to all -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Design: Tailwind CSS (MUST REPLACE with built, purged, minified CSS for 100/100) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Performance: Defer Icon Script -->
+    <script
+      defer
+      src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"
+    ></script>
+
+    <style>
+      body {
+        font-family: "Inter", "Noto Sans SC", system-ui, -apple-system,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Hide scrollbar utilities */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Prevent CLS on icons */
+      iconify-icon {
+        display: inline-block;
+        min-width: 1em;
+        min-height: 1em;
+      }
+
+      /* Visible focus for a11y (Lighthouse 100) */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563eb;
+      }
+
+      /* Ensure checkbox focus is visible */
+      input[type="checkbox"]:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563eb;
+      }
+    </style>
+  </head>
+
+  <body class="h-screen w-full flex overflow-hidden bg-white text-slate-600">
+    <!-- Left Section: Realistic Suspension Bridge Background -->
+    <main class="w-full flex h-full">
+      <section
+        class="relative hidden lg:flex lg:w-7/12 bg-slate-800 flex-col justify-between overflow-hidden group"
+        aria-label="Brand Showcase"
+      >
+        <!-- Optimized Background Image (LCP element) -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
+            alt="Suspension bridge construction site"
+            width="1200"
+            height="800"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full h-full object-cover object-center transition-transform duration-[20s] ease-in-out group-hover:scale-105"
+          />
+        </div>
+
+        <!-- Gradient Overlays -->
+        <div
+          class="absolute inset-0 z-10 bg-blue-900/30 mix-blend-multiply"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute inset-0 z-10 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"
+          aria-hidden="true"
+        ></div>
+
+        <!-- Content Overlay -->
+        <div class="relative z-20 p-12 flex flex-col h-full justify-between">
+          <!-- Kept intentionally (design spacing / future logo slot) -->
+          <div class="flex items-center gap-2"></div>
+
+          <div class="max-w-md">
+            <h1
+              class="text-5xl font-semibold text-white tracking-tight mb-6 drop-shadow-lg"
+            >
+              Smart Management <br />
+              <span class="text-blue-200">Connecting Future</span>
+            </h1>
+            <p
+              class="text-slate-200 text-base leading-relaxed font-medium drop-shadow-md"
+            >
+              Full lifecycle engineering management solution, empowering
+              cross-sea bridge construction, improving engineering quality and
+              safety management efficiency.
+            </p>
+          </div>
+
+          <div
+            class="flex items-center justify-between border-t border-white/10 pt-6"
+          >
+            <div class="text-sm text-slate-300 font-medium">
+              © 2026 R&amp;B Design Group. All Rights Reserved.
+            </div>
+
+            <!-- Location Label -->
+            <div
+              class="flex items-center gap-1.5 px-3 py-1.5 bg-black/30 backdrop-blur-md rounded-full border border-white/10 text-xs text-slate-200"
+            >
+              <iconify-icon
+                icon="lucide:map-pin"
+                width="12"
+                height="12"
+                aria-hidden="true"
+              ></iconify-icon>
+              <span>Cross-sea Bridge Site - Section A2</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Section: Login Form -->
+      <section
+        class="w-full lg:w-5/12 flex items-center justify-center bg-white relative"
+        aria-labelledby="login-title"
+      >
+        <div class="w-full max-w-sm px-8">
+          <!-- Mobile Logo (kept for spacing / future logo slot) -->
+          <div class="lg:hidden flex items-center gap-2 mb-8"></div>
+
+          <div class="mb-10">
+            <h2
+              id="login-title"
+              class="text-3xl font-semibold text-slate-900 tracking-tight mb-4"
+            >
+              Welcome Back
+            </h2>
+          </div>
+
+          <!-- Form action: Replace # with actual HTTPS endpoint -->
+          <form action="#" method="POST" class="space-y-5" novalidate>
+            <!-- Username Input -->
+            <div class="group">
+              <label
+                for="username"
+                class="block text-sm font-medium text-slate-700 mb-2"
+                >Account / Employee ID</label
+              >
+              <div class="relative">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  autocomplete="username"
+                  class="peer w-full bg-slate-50 text-base text-slate-900 border border-slate-200 rounded-lg px-4 py-3 pl-12 placeholder-slate-500 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200"
+                  placeholder="user@example.com"
+                  required
+                  aria-required="true"
+                />
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 peer-focus:text-blue-500 transition-colors"
+                  aria-hidden="true"
+                >
+                  <iconify-icon
+                    icon="lucide:user"
+                    width="20"
+                    height="20"
+                    stroke-width="1.5"
+                  ></iconify-icon>
+                </div>
+              </div>
+            </div>
+
+            <!-- Password Input -->
+            <div class="group">
+              <div class="flex items-center justify-between mb-2">
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-slate-700"
+                  >Password</label
+                >
+              </div>
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  autocomplete="current-password"
+                  class="peer w-full bg-slate-50 text-base text-slate-900 border border-slate-200 rounded-lg px-4 py-3 pl-12 placeholder-slate-500 outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200"
+                  placeholder="••••••••"
+                  required
+                  aria-required="true"
+                />
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 peer-focus:text-blue-500 transition-colors"
+                  aria-hidden="true"
+                >
+                  <iconify-icon
+                    icon="lucide:lock"
+                    width="20"
+                    height="20"
+                    stroke-width="1.5"
+                  ></iconify-icon>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between">
+              <label class="flex items-center space-x-2 cursor-pointer group">
+                <div class="relative flex items-center">
+                  <input
+                    type="checkbox"
+                    name="remember"
+                    id="remember"
+                    class="peer appearance-none h-4 w-4 border border-slate-300 rounded bg-white checked:bg-slate-900 checked:border-slate-900 transition-colors focus:ring-2 focus:ring-offset-1 focus:ring-slate-500/20"
+                  />
+                  <iconify-icon
+                    icon="lucide:check"
+                    class="absolute left-0.5 top-0.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity"
+                    width="12"
+                    height="12"
+                    stroke-width="3"
+                    aria-hidden="true"
+                  ></iconify-icon>
+                </div>
+                <span
+                  class="text-sm text-slate-600 font-medium group-hover:text-slate-800 transition-colors"
+                  >Remember me</span
+                >
+              </label>
+
+              <a
+                href="#"
+                class="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline transition-all min-h-[44px] inline-flex items-center"
+                >Forgot password?</a
+              >
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full bg-slate-900 hover:bg-slate-800 text-white text-base font-medium py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px]"
+            >
+              <span>Login Now</span>
+              <iconify-icon
+                icon="lucide:arrow-right"
+                width="20"
+                height="20"
+                stroke-width="1.5"
+                aria-hidden="true"
+              ></iconify-icon>
+            </button>
+
+            <!-- Divider -->
+            <div class="relative py-2">
+              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-slate-100"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-slate-500"
+                  >Or sign in with</span
+                >
+              </div>
+            </div>
+
+            <!-- Social Login -->
+            <div class="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                class="flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium group min-h-[48px]"
+              >
+                <iconify-icon
+                  icon="mdi:google"
+                  class="text-slate-400 group-hover:text-[#4285F4] transition-colors"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                ></iconify-icon>
+                <span>Google</span>
+              </button>
+              <button
+                type="button"
+                class="flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium group min-h-[48px]"
+              >
+                <iconify-icon
+                  icon="mdi:github"
+                  class="text-slate-400 group-hover:text-[#181717] transition-colors"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                ></iconify-icon>
+                <span>Github</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-8 text-center">
+            <p class="text-sm text-slate-400">
+              Not registered yet?
+              <a
+                href="#"
+                class="text-slate-700 font-medium hover:underline min-h-[44px] inline-flex items-center"
+                >Contact Admin</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <!-- Footer for form side -->
+        <div class="absolute bottom-6 w-full text-center px-8">
+          <p class="text-xs text-slate-300 font-medium tracking-tight">
+            SECURE PLATFORM V2.4.0
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
