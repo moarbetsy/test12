@@ -13,32 +13,34 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="color-scheme" content="light" />
 
-    <!-- No-404 favicon (replace with your real favicon if you have one) -->
+    <!-- No-404 favicon (replace with your real favicon if available) -->
     <link
       rel="icon"
       type="image/svg+xml"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Cpath d='M18 44V20h14q6 0 9 3t3 8q0 5-3 9t-9 4H18zm8-7h5q3 0 4.5-1.6T37 31q0-2.6-1.2-4t-4.3-1.4h-5v11z' fill='white'/%3E%3C/svg%3E"
     />
 
-    <!-- Preload desktop image (not LCP on mobile because left panel is hidden) -->
+    <!-- Desktop-only hero preload (prevents mobile LCP waste) -->
     <link
       rel="preload"
       as="image"
-      href="https://i.postimg.cc/yN2bZ20z/photo-1545558014-8692077e9b5c-(1).avif"
+      href="https://i.postimg.cc/yN2bZ20z/photo-1545558014-8692077e9b5c-1.avif"
+      media="(min-width: 1024px)"
+      fetchpriority="high"
     />
-    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
 
     <style>
       :root {
         --bg: #ffffff;
-        --text: #0f172a; /* slate-900 */
-        --muted: #334155; /* slate-700 */
-        --muted-2: #475569; /* slate-600 */
+        --text: #0f172a;   /* slate-900 */
+        --muted: #334155;  /* slate-700 */
+        --muted-2: #475569;/* slate-600 */
         --border: #e2e8f0; /* slate-200 */
-        --surface: #f8fafc; /* slate-50 */
-        --primary: #0f172a; /* slate-900 */
-        --primary-hover: #1e293b; /* slate-800 */
-        --link: #2563eb; /* blue-600 */
+        --surface: #f8fafc;/* slate-50 */
+        --primary: #0f172a;
+        --primary-hover: #1e293b;
+        --link: #2563eb;  /* blue-600 */
         --focus: #2563eb;
         --shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         --shadow-hover: 0 6px 20px rgba(15, 23, 42, 0.12);
@@ -46,7 +48,6 @@
       }
 
       * { box-sizing: border-box; }
-
       html, body { height: 100%; }
 
       body {
@@ -72,11 +73,9 @@
         box-shadow: var(--shadow);
         z-index: 1000;
       }
-      .skip-link:focus {
-        left: 12px;
-      }
+      .skip-link:focus { left: 12px; }
 
-      /* Focus-visible for a11y */
+      /* Focus-visible (a11y) */
       a:focus-visible,
       button:focus-visible,
       input:focus-visible {
@@ -157,11 +156,11 @@
         text-shadow: 0 12px 40px rgba(0,0,0,0.35);
         max-width: 560px;
       }
-      .brand__headline span { color: #bfdbfe; } /* blue-200 */
+      .brand__headline span { color: #bfdbfe; }
 
       .brand__desc {
         margin: 18px 0 0;
-        color: rgba(226, 232, 240, 0.95); /* slate-200 */
+        color: rgba(226, 232, 240, 0.95);
         font-size: 16px;
         line-height: 1.6;
         font-weight: 560;
@@ -196,6 +195,12 @@
         font-size: 12px;
         font-weight: 560;
         white-space: nowrap;
+      }
+      .pill__icon {
+        width: 14px;
+        height: 14px;
+        color: currentColor;
+        flex: 0 0 auto;
       }
 
       /* Right panel */
@@ -240,7 +245,6 @@
       }
 
       .field { display: grid; gap: 8px; }
-
       .input-wrap { position: relative; }
 
       .input {
@@ -254,8 +258,7 @@
         color: var(--text);
         transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
       }
-
-      .input::placeholder { color: #64748b; } /* slate-500 */
+      .input::placeholder { color: #64748b; }
 
       .input:focus {
         background: #fff;
@@ -270,13 +273,10 @@
         transform: translateY(-50%);
         width: 18px;
         height: 18px;
-        color: #94a3b8; /* slate-400 */
+        color: #94a3b8;
         pointer-events: none;
       }
-      .input:focus + .icon,
-      .input:focus-visible + .icon {
-        color: var(--link);
-      }
+      .input:focus + .icon { color: var(--link); }
 
       .row {
         display: flex;
@@ -292,14 +292,12 @@
         cursor: pointer;
         user-select: none;
       }
-
       .check input {
         width: 16px;
         height: 16px;
         margin: 0;
         accent-color: var(--primary);
       }
-
       .check span {
         font-size: 14px;
         font-weight: 600;
@@ -353,14 +351,14 @@
         right: 0;
         top: 50%;
         height: 1px;
-        background: #f1f5f9; /* slate-100 */
+        background: #f1f5f9;
       }
       .divider span {
         position: relative;
         display: inline-block;
         padding: 0 10px;
         background: #fff;
-        color: #64748b; /* slate-500 */
+        color: #64748b;
         font-size: 13px;
         font-weight: 600;
         left: 50%;
@@ -388,18 +386,18 @@
         font-size: 14px;
         font-weight: 650;
         cursor: pointer;
-        transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        transition: background 160ms ease, border-color 160ms ease;
       }
       .btn-outline:hover {
         background: var(--surface);
-        border-color: #cbd5e1; /* slate-300 */
+        border-color: #cbd5e1;
       }
 
       .muted-center {
         margin-top: 22px;
         text-align: center;
         font-size: 14px;
-        color: #64748b; /* slate-500 (passes contrast) */
+        color: #64748b; /* passes contrast */
       }
       .muted-center a {
         color: var(--muted);
@@ -418,13 +416,12 @@
         right: 0;
         text-align: center;
         padding: 0 32px;
-        color: #64748b; /* slate-500 (passes contrast; fixes your audit fail) */
+        color: #64748b; /* passes contrast */
         font-size: 12px;
         font-weight: 650;
         letter-spacing: 0.02em;
       }
 
-      /* Small screens */
       @media (max-width: 480px) {
         .card { padding: 0 18px; }
         .title { font-size: 28px; }
@@ -436,11 +433,12 @@
     <a class="skip-link" href="#login-title">Skip to login</a>
 
     <main class="page">
-      <!-- Left: Brand showcase -->
+      <!-- Left: Brand showcase (desktop only) -->
       <section class="brand" aria-label="Brand Showcase">
+        <!-- AVIF only, no fallback -->
         <img
           class="brand__img"
-          src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?q=80&w=1200&auto=format&fit=crop"
+          src="https://i.postimg.cc/yN2bZ20z/photo-1545558014-8692077e9b5c-1.avif"
           alt="Suspension bridge construction site"
           width="1200"
           height="800"
@@ -448,6 +446,7 @@
           decoding="async"
           fetchpriority="high"
         />
+
         <div class="brand__overlay1" aria-hidden="true"></div>
         <div class="brand__overlay2" aria-hidden="true"></div>
 
@@ -469,10 +468,18 @@
             <div class="brand__copyright">© 2026 R&amp;B Design Group. All Rights Reserved.</div>
 
             <div class="pill" aria-label="Location">
-              <!-- map-pin -->
-              <svg class="pill__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 22s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.8"/>
+              <svg class="pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 22s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                />
               </svg>
               <span>Cross-sea Bridge Site - Section A2</span>
             </div>
@@ -485,7 +492,7 @@
         <div class="card">
           <h2 id="login-title" class="title">Welcome Back</h2>
 
-          <form class="form" action="/login" method="POST">
+          <form class="form" action="/login" method="POST" novalidate>
             <div class="field">
               <label for="username">Account / Employee ID</label>
               <div class="input-wrap">
@@ -500,8 +507,8 @@
                   inputmode="email"
                   placeholder="user@example.com"
                   required
+                  aria-required="true"
                 />
-                <!-- user -->
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M20 21a8 8 0 1 0-16 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                   <path d="M12 13a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 13Z" stroke="currentColor" stroke-width="1.8"/>
@@ -510,9 +517,7 @@
             </div>
 
             <div class="field">
-              <div class="row" style="margin-bottom: 0;">
-                <label for="password" style="margin: 0;">Password</label>
-              </div>
+              <label for="password">Password</label>
               <div class="input-wrap">
                 <input
                   class="input"
@@ -522,8 +527,8 @@
                   autocomplete="current-password"
                   placeholder="••••••••"
                   required
+                  aria-required="true"
                 />
-                <!-- lock -->
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                   <path d="M6.5 11h11A2.5 2.5 0 0 1 20 13.5v6A2.5 2.5 0 0 1 17.5 22h-11A2.5 2.5 0 0 1 4 19.5v-6A2.5 2.5 0 0 1 6.5 11Z" stroke="currentColor" stroke-width="1.8"/>
@@ -542,7 +547,6 @@
 
             <button class="btn" type="submit">
               <span>Login Now</span>
-              <!-- arrow-right -->
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                 <path d="M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -553,7 +557,6 @@
 
             <div class="social">
               <button class="btn-outline" type="button" aria-label="Sign in with Google">
-                <!-- Google "G" (simple) -->
                 <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
                   <path fill="#EA4335" d="M24 9.5c3.54 0 6.1 1.54 7.5 2.82l5.14-4.98C33.55 4.54 29.26 2.5 24 2.5 14.73 2.5 6.84 7.86 3.1 15.68l6.27 4.87C11.1 14.7 16.95 9.5 24 9.5z"/>
                   <path fill="#4285F4" d="M46.5 24.5c0-1.6-.14-2.73-.44-3.91H24v7.41h12.79c-.26 2-1.66 5.01-4.78 7.02l6.17 4.78c3.69-3.42 8.32-8.45 8.32-15.3z"/>
@@ -564,7 +567,6 @@
               </button>
 
               <button class="btn-outline" type="button" aria-label="Sign in with GitHub">
-                <!-- GitHub mark (simple) -->
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 .7A11.3 11.3 0 0 0 8.4 22c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.9 1.3 3.6 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C17.6 4 18.6 4.3 18.6 4.3c.6 1.6.2 2.8.1 3.1.8.9 1.2 2 1.2 3.3 0 4.6-2.7 5.6-5.3 5.9.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.3 11.3 0 0 0 12 .7z"/>
                 </svg>
