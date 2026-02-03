@@ -32,12 +32,11 @@
       media="print"
       onload="this.media='all'"
     />
-    <noscript>
-      <link
+    <noscript
+      ><link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
         rel="stylesheet"
-      />
-    </noscript>
+    /></noscript>
 
     <!-- Design: Tailwind CSS (MUST REPLACE with built, purged, minified CSS for 100/100) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,7 +54,6 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-
       /* Hide scrollbar utilities */
       .no-scrollbar::-webkit-scrollbar {
         display: none;
@@ -79,7 +77,6 @@
         outline: none;
         box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2563eb;
       }
-
       /* Ensure checkbox focus is visible */
       input[type="checkbox"]:focus-visible {
         outline: none;
@@ -87,7 +84,6 @@
       }
     </style>
   </head>
-
   <body class="h-screen w-full flex overflow-hidden bg-white text-slate-600">
     <!-- Left Section: Realistic Suspension Bridge Background -->
     <main class="w-full flex h-full">
@@ -121,7 +117,6 @@
 
         <!-- Content Overlay -->
         <div class="relative z-20 p-12 flex flex-col h-full justify-between">
-          <!-- Kept intentionally (design spacing / future logo slot) -->
           <div class="flex items-center gap-2"></div>
 
           <div class="max-w-md">
@@ -146,7 +141,6 @@
             <div class="text-sm text-slate-300 font-medium">
               © 2026 R&amp;B Design Group. All Rights Reserved.
             </div>
-
             <!-- Location Label -->
             <div
               class="flex items-center gap-1.5 px-3 py-1.5 bg-black/30 backdrop-blur-md rounded-full border border-white/10 text-xs text-slate-200"
@@ -169,7 +163,7 @@
         aria-labelledby="login-title"
       >
         <div class="w-full max-w-sm px-8">
-          <!-- Mobile Logo (kept for spacing / future logo slot) -->
+          <!-- Mobile Logo -->
           <div class="lg:hidden flex items-center gap-2 mb-8"></div>
 
           <div class="mb-10">
@@ -298,7 +292,10 @@
 
             <!-- Divider -->
             <div class="relative py-2">
-              <div class="absolute inset-0 flex items-center" aria-hidden="true">
+              <div
+                class="absolute inset-0 flex items-center"
+                aria-hidden="true"
+              >
                 <div class="w-full border-t border-slate-100"></div>
               </div>
               <div class="relative flex justify-center text-sm">
